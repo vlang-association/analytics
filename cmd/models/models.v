@@ -4,12 +4,17 @@ pub enum EventKind {
 	page_view
 }
 
+pub enum SiteId {
+	playground
+}
+
 [table: 'analytics']
 pub struct AnalyticsEvent {
 pub:
 	id         int    [primary]
 	url        string // event page url
 	event_kind int    // actually EventKind
+	site_id    int    // actually SiteId
 pub mut:
 	ip              string // ip address of the user
 	user_agent      string // user agent of the user

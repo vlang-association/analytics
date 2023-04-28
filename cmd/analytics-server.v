@@ -22,7 +22,10 @@ fn (mut s Server) index() vweb.Result {
 
 ['/a'; post]
 fn (mut s Server) analytics() vweb.Result {
+	println('Got analytics event from ' + s.ip())
+
 	mut data := json.decode(models.AnalyticsEvent, s.req.data) or {
+		eprintln('Invalid JSON: ' + s.req.data)
 		s.set_status(400, 'Bad Request')
 		return s.text('Invalid JSON')
 	}
@@ -39,6 +42,8 @@ fn (mut s Server) analytics() vweb.Result {
 		return s.text('Database Error')
 	}
 
+	println('Analytics event saved')
+	s.set_status(200, 'OK')
 	return s.text('OK')
 }
 
