@@ -16,7 +16,6 @@ pub:
 	event_kind int    // actually EventKind
 	site_id    int    // actually SiteId
 pub mut:
-	ip              string // ip address of the user
 	user_agent      string // user agent of the user
 	accept_language string // accept language of the user
 	created_at      i64    // utc timestamp

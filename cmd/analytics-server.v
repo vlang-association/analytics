@@ -22,16 +22,12 @@ fn (mut s Server) index() vweb.Result {
 
 ['/a'; post]
 fn (mut s Server) analytics() vweb.Result {
-	println('Got analytics event from ' + s.ip())
+	println('Got analytics event from ${s.ip()}')
 
 	mut data := json.decode(models.AnalyticsEvent, s.req.data) or {
 		eprintln('Invalid JSON: ' + s.req.data)
 		s.set_status(400, 'Bad Request')
 		return s.text('Invalid JSON')
-	}
-
-	if data.ip == '' {
-		data.ip = s.ip()
 	}
 
 	if data.user_agent == '' {
@@ -58,7 +54,7 @@ fn (mut s Server) analytics() vweb.Result {
 
 fn main() {
 	mut fp := flag.new_flag_parser(os.args)
-	port := fp.int('port', `p`, 8081, 'Port to listen on')
+	port := fp.int('port', `p`, 8100, 'Port to listen on')
 
 	db := sqlite.connect('db.sqlite') or { panic(err) }
 
