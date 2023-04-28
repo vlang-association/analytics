@@ -30,9 +30,18 @@ fn (mut s Server) analytics() vweb.Result {
 		return s.text('Invalid JSON')
 	}
 
-	data.ip = s.ip()
-	data.user_agent = s.req.header.get(http.CommonHeader.user_agent) or { '' }
-	data.accept_language = s.req.header.get(http.CommonHeader.accept_language) or { '' }
+	if data.ip == '' {
+		data.ip = s.ip()
+	}
+
+	if data.user_agent == '' {
+		data.user_agent = s.req.header.get(http.CommonHeader.user_agent) or { '' }
+	}
+
+	if data.accept_language == '' {
+		data.accept_language = s.req.header.get(http.CommonHeader.accept_language) or { '' }
+	}
+
 	data.created_at = time.utc().unix_time()
 
 	sql s.db {
