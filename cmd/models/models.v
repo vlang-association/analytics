@@ -42,4 +42,7 @@ pub mut:
 	accept_language string // accept language of the user
 	referrer        string // referrer url
 	created_at      i64    // utc timestamp
+	country_code    string // country code of the user
+	country_name    string // country name of the user
+	city_name       string // city name of the user
 }

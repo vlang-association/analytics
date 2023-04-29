@@ -29,8 +29,6 @@ fn (mut s Server) analytics() vweb.Result {
 		return s.text('Invalid JSON')
 	}
 
-	data.site_id = int(models.site_id_from_url(data.url))
-
 	if data.user_agent == '' {
 		data.user_agent = s.req.header.get(.user_agent) or { '' }
 	}
@@ -43,6 +41,10 @@ fn (mut s Server) analytics() vweb.Result {
 		data.referrer = s.req.header.get(.referer) or { '' }
 	}
 
+	data.site_id = int(models.site_id_from_url(data.url))
+	data.country_code = s.req.header.get_custom('Country-Code', exact: false) or { '' }
+	data.country_name = s.req.header.get_custom('Country-Name', exact: false) or { '' }
+	data.city_name = s.req.header.get_custom('City-Name', exact: false) or { '' }
 	data.created_at = time.utc().unix_time()
 
 	sql s.db {
