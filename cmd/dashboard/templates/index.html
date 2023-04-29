@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="VOSCA Analytics Dashboard">
+
+    <script src="/scripts/theme.js"></script>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://vosca.dev/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://vosca.dev/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://vosca.dev/images/favicon-16x16.png">
+    <link rel="manifest" href="https://vosca.dev/images/site.webmanifest">
+    <link rel="icon" type="image/x-icon" href="https://vosca.dev/images/favicon.ico">
+    <!-- End Favicons -->
+
+    <!-- Preload -->
+    <link rel="preload" href="https://vosca.dev/fonts/JetBrainsSans-Regular.woff2"
+          as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://vosca.dev/fonts/JetBrainsSans-Medium.woff2"
+          as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://vosca.dev/fonts/JetBrainsSans-Bold.woff2"
+          as="font" type="font/woff2" crossorigin>
+
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+    <!-- End Preload -->
+
+    <!-- Open Graph-->
+    <meta property="og:title" content="@{title} | VOSCA">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="/images/open-graph/docs-cover.png">
+    <meta property="og:site_name" content="VOSCA">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://vosca.dev/analytics/">
+    <!-- End Open Graph -->
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@@vlang">
+    <meta name="twitter:title" content="@{title} | VOSCA">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:creator" content="@@vlang-association">
+    <meta name="twitter:image:src" content="/images/open-graph/docs-cover.png">
+    <!-- End Twitter Card -->
+
+    <!-- Schema.org WebPage -->
+    <script type="application/ld+json"> {
+            "@@context": "http://schema.org",
+            "@@type": "WebPage",
+            "@@id": "https://vosca.dev/analytics/#webpage",
+            "url": "https://vosca.dev/analytics/",
+            "name": "@{title} | VOSCA",
+            "description": "",
+            "image": "/images/open-graph/docs-cover.png",
+            "inLanguage": "en-US"
+        }</script>
+    <!-- End Schema.org -->
+
+    <!-- Schema.org WebSite -->
+    <script type="application/ld+json"> {
+            "@@type": "WebSite",
+            "@@id": "https://vosca.dev/analytics/#website",
+            "url": "https://vosca.dev/analytics/",
+            "name": "VOSCA"
+        }</script>
+    <!-- End Schema.org -->
+
+    <link rel="stylesheet" href="/styles/index.css">
+
+    <title>@{title} | VOSCA</title>
+</head>
+<body>
+
+@include 'partials/header'
+
+<div class="wrapper">
+    @{content}
+</div>
+
+@include 'partials/footer'
+
+<script src="https://unpkg.com/vosca-analytics@@0.0.*/dist/a.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="/scripts/shortcut-fixer.js"></script>
+<script src="/scripts/header.js"></script>
+<script src="/scripts/header-search.js"></script>
+
+<script src="/scripts/charts.js"></script>
+
+<script>
+    const perSiteChart = document.getElementById('per-site-stats');
+
+    const charts = []
+    charts.push(new Chart(perSiteChart, {
+        type: 'bar',
+        data: {
+            labels: ['Main page', 'Documentation', 'Playground', 'Modules', 'Blog'],
+            datasets: [{
+                label: 'Number of Views',
+                data: [
+                    @{per_sites_data}
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    }));
+
+
+</script>
+
+</body>
+</html>

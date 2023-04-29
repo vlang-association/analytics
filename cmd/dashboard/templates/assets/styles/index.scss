@@ -1,0 +1,102 @@
+@import "fonts";
+@import "colors";
+@import "header";
+@import "footer";
+@import "shortcut";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+  margin: 5px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+
+  font: 400 14px/1.5 "JetBrainsSans", Helvetica, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "kern" 1;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration-style: dotted;
+}
+
+a.external-link {
+  &:after {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-left: 1px;
+    top: 2px;
+    position: relative;
+
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6b00'%3E%3Cpath d='M14 2H5.75l3.595 3.595L2.22 12.72l1.06 1.06 7.125-7.125L14 10.25V2z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: 110% 100%;
+  }
+}
+
+.wrapper {
+  width: 100vw;
+
+  margin-top: 70px;
+  padding: 50px 50px;
+
+  @media (max-width: 1000px) {
+    height: auto;
+    padding: 50px 20px;
+  }
+
+  .chart {
+    height: 400px !important;
+    max-width: 800px;
+  }
+
+  .updated-label {
+    margin-top: 50px;
+
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(updated-label);
+  }
+}

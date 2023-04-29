@@ -7,6 +7,12 @@ import os
 import flag
 import time
 
+const (
+	template_path = './templates/index.html'
+	output_path   = 'output'
+	assets_path   = 'cmd/dashboard/templates/assets'
+)
+
 struct FetchedData {
 mut:
 	updated_at time.Time
@@ -89,36 +95,30 @@ fn (mut s Server) index() vweb.Result {
 	// 	return '<tr><td>' + it.url + '</td><td>' + created_at.format_ss() + '</td></tr>'
 	// }).join('\n')
 
-	html := '
-<table>
-<tr>
-<td>Playground</td>
-<td>${s.data.playground_views}</td>
-</tr>
-<tr>
-<td>Docs</td>
-<td>${s.data.docs_views}</td>
-</tr>
-<tr>
-<td>Blog</td>
-<td>${s.data.blog_views}</td>
-</tr>
-<tr>
-<td>Modules</td>
-<td>${s.data.modules_views}</td>
-</tr>
-<tr>
-<td>Main page</td>
-<td>${s.data.main_page_views}</td>
-</tr>
-</table>
+	content := '
+<h2>Per sites statistic</h2>
 
-<p>
+<div>
+  <canvas class="chart" id="per-site-stats"></canvas>
+</div>
+
+<p class="updated-label">
 Updated at ${s.data.updated_at.format_ss()}
 </p>
 '
 
-	return s.html('<html><body><table>' + html + '</table></body></html>')
+	per_sites_data := [
+		s.data.main_page_views,
+		s.data.docs_views,
+		s.data.playground_views,
+		s.data.blog_views,
+		s.data.modules_views,
+	].map(it.str()).join(', ')
+
+	title := 'Dashboard'
+	now := time.now().custom_format('YYYY')
+
+	return s.html($tmpl(template_path))
 }
 
 fn main() {
@@ -132,6 +132,11 @@ fn main() {
 	}
 
 	spawn server.update_analytics_data()
+
+	if !server.handle_static('./cmd/dashboard/templates/assets', true) {
+		panic('Failed to load static assets')
+	}
+	server.serve_static('/', './cmd/dashboard/templates/assets')
 
 	vweb.run(server, port)
 }

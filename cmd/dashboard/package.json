@@ -1,0 +1,23 @@
+{
+  "name": "vosca-analytics-dashboard",
+  "version": "0.0.1",
+  "description": "Source code for V Open Source Community Association (VOSCA) Analytics Dashboard",
+  "scripts": {
+    "sass-watch": "sass --watch templates/assets/styles/index.scss:templates/assets/styles/index.css",
+    "sass-build": "sass templates/assets/styles/index.scss:templates/assets/styles/index.css"
+  },
+  "author": {
+    "name": "V Open Source Community Association",
+    "url": "https://vosca.dev/"
+  },
+  "contributors": [
+    "Petr Makhnev"
+  ],
+  "bugs": {
+    "url": "https://github.com/vlang-association/blog/issues"
+  },
+  "homepage": "https://vosca.dev/",
+  "dependencies": {
+    "sass": "^1.41.1"
+  }
+}
