@@ -1103,7 +1103,7 @@ a.external-link:after {
 .wrapper {
   width: 100vw;
   margin-top: 70px;
-  padding: 50px 50px;
+  padding: 20px 50px 20px;
 }
 @media (max-width: 1000px) {
   .wrapper {
@@ -1111,8 +1111,12 @@ a.external-link:after {
     padding: 50px 20px;
   }
 }
+.wrapper h2 {
+  font-size: 30px;
+  font-weight: 700;
+}
 .wrapper .chart {
-  height: 400px !important;
+  max-height: 400px !important;
   max-width: 800px;
 }
 .wrapper .updated-label {
@@ -1120,7 +1124,7 @@ a.external-link:after {
   font-size: 12px;
   font-weight: 400;
   line-height: 1;
-  color: var(updated-label);
+  color: var(--secondary-color);
 }
 
 /*# sourceMappingURL=index.css.map */
