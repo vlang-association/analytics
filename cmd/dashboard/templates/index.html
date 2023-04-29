@@ -90,10 +90,8 @@
 <script src="/scripts/charts.js"></script>
 
 <script>
-    const perSiteChart = document.getElementById('per-site-stats');
-
     const charts = []
-    charts.push(new Chart(perSiteChart, {
+    charts.push(new Chart(document.getElementById('per-site-stats'), {
         type: 'bar',
         data: {
             labels: ['Main page', 'Documentation', 'Playground', 'Modules', 'Blog', 'IntelliJ V Landing'],
@@ -131,6 +129,46 @@
         }
     }));
 
+    charts.push(new Chart(document.getElementById('per-country-stats'), {
+        type: 'bar',
+        data: {
+            labels: [
+                @{per_countries_labels}
+            ],
+            datasets: [{
+                label: 'Number of Views',
+                data: [
+                    @{per_countries_data}
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    }));
 
 </script>
 

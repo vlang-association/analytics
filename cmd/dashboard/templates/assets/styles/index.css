@@ -1119,6 +1119,9 @@ a.external-link:after {
   max-height: 400px !important;
   max-width: 800px;
 }
+.wrapper .big-height-chart {
+  max-height: 600px !important;
+}
 .wrapper .updated-label {
   margin-top: 50px;
   font-size: 12px;

@@ -23,6 +23,8 @@ mut:
 	modules_views    int
 	main_page_views  int
 	intellij_v_views int
+
+	country_map map[string]int
 }
 
 struct Server {
@@ -84,6 +86,17 @@ fn (mut s Server) update_analytics_data() {
 
 		s.data.updated_at = time.now()
 
+		res, _ := s.db.exec('SELECT country_name, SUM(1) FROM analytics GROUP BY country_name')
+
+		s.data.country_map = map[string]int{}
+		for row in res {
+			country, country_count := row.vals[0], row.vals[1]
+			if country.trim(' ').len == 0 {
+				continue
+			}
+			s.data.country_map[country] = country_count.int()
+		}
+
 		time.sleep(1 * time.minute)
 	}
 }
@@ -110,6 +123,12 @@ fn (mut s Server) index() vweb.Result {
   <canvas class="chart" id="per-site-stats"></canvas>
 </div>
 
+<h2>Per country statistic</h2>
+
+<div>
+  <canvas class="chart" id="per-country-stats"></canvas>
+</div>
+
 <p class="updated-label">
 Updated at ${s.data.updated_at.format_ss()}
 </p>
@@ -123,6 +142,9 @@ Updated at ${s.data.updated_at.format_ss()}
 		s.data.modules_views,
 		s.data.intellij_v_views,
 	].map(it.str()).join(', ')
+
+	per_countries_labels := s.data.country_map.keys().map('"${it}"').join(', ')
+	per_countries_data := s.data.country_map.values().map(it.str()).join(', ')
 
 	title := 'Dashboard'
 	now := time.now().custom_format('YYYY')
