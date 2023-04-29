@@ -22,6 +22,7 @@ mut:
 	blog_views       int
 	modules_views    int
 	main_page_views  int
+	intellij_v_views int
 }
 
 struct Server {
@@ -74,6 +75,13 @@ fn (mut s Server) update_analytics_data() {
 			return
 		}
 
+		s.data.intellij_v_views = sql s.db {
+			select count from models.AnalyticsEvent where site_id == 5
+		} or {
+			s.db_error(err)
+			return
+		}
+
 		s.data.updated_at = time.now()
 
 		time.sleep(1 * time.minute)
@@ -113,6 +121,7 @@ Updated at ${s.data.updated_at.format_ss()}
 		s.data.playground_views,
 		s.data.blog_views,
 		s.data.modules_views,
+		s.data.intellij_v_views,
 	].map(it.str()).join(', ')
 
 	title := 'Dashboard'

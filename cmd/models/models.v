@@ -12,6 +12,7 @@ pub enum SiteId {
 	blog
 	modules
 	main_page
+	intellij_plugin
 	unknown = -1
 }
 
@@ -24,6 +25,7 @@ pub fn site_id_from_url(path string) SiteId {
 		'blog.vosca.dev' { .blog }
 		'modules.vosca.dev' { .modules }
 		'vosca.dev' { .main_page }
+		'intellij-v.github.io' { .intellij_plugin }
 		else { .unknown }
 	}
 }
