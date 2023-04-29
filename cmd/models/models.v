@@ -6,6 +6,10 @@ pub enum EventKind {
 
 pub enum SiteId {
 	playground
+	docs
+	blog
+	modules
+	main_page
 }
 
 [table: 'analytics']
@@ -19,5 +23,5 @@ pub mut:
 	user_agent      string // user agent of the user
 	accept_language string // accept language of the user
 	referrer        string // referrer url
-	created_at      i64    [omitenpty] // utc timestamp
+	created_at      i64    // utc timestamp
 }

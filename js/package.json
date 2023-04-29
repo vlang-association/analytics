@@ -1,0 +1,28 @@
+{
+  "name": "vosca-analytics",
+  "version": "0.0.2",
+  "description": "Source code for VOSCA analytics JS library",
+  "license": "MIT",
+  "scripts": {
+    "build": "node esbuild.build.config.js"
+  },
+  "author": {
+    "name": "V Open Source Community Association",
+    "email": "hello@vosca.dev",
+    "url": "https://vosca.dev"
+  },
+  "contributors": [
+    {
+      "name": "Petr Makhnev",
+      "email": "mr.makhneff@gmail.com",
+      "url": "https://github.com/i582"
+    }
+  ],
+  "main": "dist/a.js",
+  "files": [
+    "./dist"
+  ],
+  "dependencies": {
+    "esbuild": "^0.16.17"
+  }
+}

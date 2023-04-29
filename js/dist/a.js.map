@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/index.js"],
+  "sourcesContent": ["const currentUrl = window.location.href\nif (window.location.hostname !== 'localhost') {\n    fetch('https://vosca.dev/a', {\n        method: 'POST',\n        body: JSON.stringify({\n            url: currentUrl,\n        })\n    }).catch(e => {\n        console.log(e)\n    })\n}\n"],
+  "mappings": "MAAA,IAAMA,EAAa,OAAO,SAAS,KAC/B,OAAO,SAAS,WAAa,aAC7B,MAAM,sBAAuB,CACzB,OAAQ,OACR,KAAM,KAAK,UAAU,CACjB,IAAKA,CACT,CAAC,CACL,CAAC,EAAE,MAAMC,GAAK,CACV,QAAQ,IAAIA,CAAC,CACjB,CAAC",
+  "names": ["currentUrl", "e"]
+}

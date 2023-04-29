@@ -46,11 +46,37 @@ fn (mut s Server) analytics() vweb.Result {
 	sql s.db {
 		insert data into models.AnalyticsEvent
 	} or {
+		eprintln('Database Error: ${err}')
 		s.set_status(500, 'Internal Server Error')
 		return s.text('Database Error')
 	}
 
 	println('Analytics event saved')
+	s.set_status(200, 'OK')
+	return s.text('OK')
+}
+
+['/pa'; post]
+fn (mut s Server) playground_analytics() vweb.Result {
+	println('Got playground analytics event from ${s.ip()}')
+
+	mut data := json.decode(models.PlaygroundEvent, s.req.data) or {
+		eprintln('Invalid JSON: ' + s.req.data)
+		s.set_status(400, 'Bad Request')
+		return s.text('Invalid JSON')
+	}
+
+	data.created_at = time.utc().unix_time()
+
+	sql s.db {
+		insert data into models.PlaygroundEvent
+	} or {
+		eprintln('Database Error: ${err}')
+		s.set_status(500, 'Internal Server Error')
+		return s.text('Database Error')
+	}
+
+	println('Playground analytics event saved')
 	s.set_status(200, 'OK')
 	return s.text('OK')
 }
@@ -63,6 +89,10 @@ fn main() {
 
 	sql db {
 		create table models.AnalyticsEvent
+	} or { panic(err) }
+
+	sql db {
+		create table models.PlaygroundEvent
 	} or { panic(err) }
 
 	vweb.run(&Server{
