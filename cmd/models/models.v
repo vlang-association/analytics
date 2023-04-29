@@ -18,5 +18,6 @@ pub:
 pub mut:
 	user_agent      string // user agent of the user
 	accept_language string // accept language of the user
-	created_at      i64    // utc timestamp
+	referrer        string // referrer url
+	created_at      i64    [omitenpty] // utc timestamp
 }

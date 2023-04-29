@@ -6,7 +6,6 @@ import time
 import flag
 import os
 import cmd.models
-import net.http
 import db.sqlite
 
 struct Server {
@@ -31,11 +30,15 @@ fn (mut s Server) analytics() vweb.Result {
 	}
 
 	if data.user_agent == '' {
-		data.user_agent = s.req.header.get(http.CommonHeader.user_agent) or { '' }
+		data.user_agent = s.req.header.get(.user_agent) or { '' }
 	}
 
 	if data.accept_language == '' {
-		data.accept_language = s.req.header.get(http.CommonHeader.accept_language) or { '' }
+		data.accept_language = s.req.header.get(.accept_language) or { '' }
+	}
+
+	if data.referrer == '' {
+		data.referrer = s.req.header.get(.referer) or { '' }
 	}
 
 	data.created_at = time.utc().unix_time()
