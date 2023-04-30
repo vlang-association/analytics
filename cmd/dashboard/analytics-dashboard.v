@@ -10,8 +10,6 @@ import arrays
 
 const (
 	template_path = './templates/index.html'
-	output_path   = 'output'
-	assets_path   = 'cmd/dashboard/templates/assets'
 )
 
 struct FetchedData {
@@ -35,10 +33,6 @@ mut:
 	data FetchedData [vweb_global]
 }
 
-fn (mut s Server) db_error(err IError) {
-	eprintln('Database Error: ${err}')
-}
-
 fn (mut s Server) update_analytics_data() {
 	for {
 		println('Updating analytics data')
@@ -46,42 +40,42 @@ fn (mut s Server) update_analytics_data() {
 		s.data.playground_views = sql s.db {
 			select count from models.AnalyticsEvent where site_id == 0
 		} or {
-			s.db_error(err)
+			eprintln('Database Error: ${err}')
 			return
 		}
 
 		s.data.docs_views = sql s.db {
 			select count from models.AnalyticsEvent where site_id == 1
 		} or {
-			s.db_error(err)
+			eprintln('Database Error: ${err}')
 			return
 		}
 
 		s.data.blog_views = sql s.db {
 			select count from models.AnalyticsEvent where site_id == 2
 		} or {
-			s.db_error(err)
+			eprintln('Database Error: ${err}')
 			return
 		}
 
 		s.data.modules_views = sql s.db {
 			select count from models.AnalyticsEvent where site_id == 3
 		} or {
-			s.db_error(err)
+			eprintln('Database Error: ${err}')
 			return
 		}
 
 		s.data.main_page_views = sql s.db {
 			select count from models.AnalyticsEvent where site_id == 4
 		} or {
-			s.db_error(err)
+			eprintln('Database Error: ${err}')
 			return
 		}
 
 		s.data.intellij_v_views = sql s.db {
 			select count from models.AnalyticsEvent where site_id == 5
 		} or {
-			s.db_error(err)
+			eprintln('Database Error: ${err}')
 			return
 		}
 

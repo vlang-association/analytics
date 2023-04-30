@@ -2,8 +2,12 @@
 
 [![Association Official Project][AssociationOfficialBadge]][AssociationUrl]
 
-This repository contains an analytics server that is used for VOSCA sites, as well as a dashboard
-where you can view site statistics.
+This repository contains an analytics server that is used for VOSCA sites, a JavaScript script that
+sends analytics event to the server, and a dashboard that displays the collected data.
+
+- `/js` — sources of the JavaScript script
+- `/cnd/analytics-server.v` — sources of the analytics server
+- `/cnd/dashboard` — sources of the dashboard
 
 Dashboard is located at: https://analytics.vosca.dev
 

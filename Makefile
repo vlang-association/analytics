@@ -12,4 +12,3 @@ build-dashboard: mkdir
 
 start-dashboard: build-dashboard
 	./bin/analytics-dashboard -p 8102
-
