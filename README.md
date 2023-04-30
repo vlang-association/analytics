@@ -8,8 +8,8 @@ This repository contains an analytics server that is used for VOSCA sites, a Jav
 sends analytics event to the server, and a dashboard that displays the collected data.
 
 - `/js` — sources of the JavaScript script
-- `/cnd/analytics-server.v` — sources of the analytics server
-- `/cnd/dashboard` — sources of the dashboard
+- `/cmd/analytics-server.v` — sources of the analytics server
+- `/cmd/dashboard` — sources of the dashboard
 
 Dashboard is located at: https://analytics.vosca.dev
 
