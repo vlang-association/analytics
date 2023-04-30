@@ -2,6 +2,8 @@
 
 [![Association Official Project][AssociationOfficialBadge]][AssociationUrl]
 
+![](https://user-images.githubusercontent.com/51853996/235336784-b23934af-848b-40b7-a9c2-4e13aa53e33d.png)
+
 This repository contains an analytics server that is used for VOSCA sites, a JavaScript script that
 sends analytics event to the server, and a dashboard that displays the collected data.
 
