@@ -98,7 +98,7 @@ fn (mut s Server) update_analytics_data() {
 			s.data.country_map[country] = country_count.int()
 		}
 
-		time.sleep(1 * time.minute)
+		time.sleep(5 * time.minute)
 	}
 }
 
