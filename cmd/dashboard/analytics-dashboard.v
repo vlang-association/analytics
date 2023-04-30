@@ -23,6 +23,8 @@ mut:
 	main_page_views  int
 	intellij_v_views int
 
+	uniques_count int
+
 	country_map map[string]int
 }
 
@@ -92,6 +94,15 @@ fn (mut s Server) update_analytics_data() {
 			s.data.country_map[country] = country_count.int()
 		}
 
+		uniques_rows, _ := s.db.exec('
+			SELECT SUM(1)
+			FROM analytics
+			GROUP BY country_name, user_agent, accept_language
+			ORDER BY count(*) DESC
+'.trim_indent())
+
+		s.data.uniques_count = uniques_rows.len
+
 		time.sleep(5 * time.minute)
 	}
 }
@@ -112,6 +123,8 @@ fn (mut s Server) index() vweb.Result {
 	per_countries_labels := s.data.country_map.keys().map('"${it}"').join(', ')
 	per_countries_data := s.data.country_map.values().map(it.str()).join(', ')
 	countries_count := s.data.country_map.len
+
+	uniques_count := s.data.uniques_count
 
 	title := 'Dashboard'
 	updated_at := s.data.updated_at.format_ss()
