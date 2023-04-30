@@ -83,12 +83,41 @@ a.external-link {
 
   @media (max-width: 1000px) {
     height: auto;
-    padding: 50px 20px;
+    padding: 20px 20px 10px;
   }
 
   h2 {
     font-size: 30px;
     font-weight: 700;
+  }
+
+  .general-statistic {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 20px;
+
+    .block {
+      min-width: 300px;
+      padding: 10px 20px;
+      border: 1px solid var(--divider-color);
+      border-radius: 10px;
+
+      .title {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.5;
+        color: var(--secondary-color);
+      }
+
+      .value {
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 1.5;
+        color: var(--text-color);
+      }
+    }
   }
 
   .chart {

@@ -1108,12 +1108,37 @@ a.external-link:after {
 @media (max-width: 1000px) {
   .wrapper {
     height: auto;
-    padding: 50px 20px;
+    padding: 20px 20px 10px;
   }
 }
 .wrapper h2 {
   font-size: 30px;
   font-weight: 700;
+}
+.wrapper .general-statistic {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 20px;
+  row-gap: 20px;
+}
+.wrapper .general-statistic .block {
+  min-width: 300px;
+  padding: 10px 20px;
+  border: 1px solid var(--divider-color);
+  border-radius: 10px;
+}
+.wrapper .general-statistic .block .title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--secondary-color);
+}
+.wrapper .general-statistic .block .value {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--text-color);
 }
 .wrapper .chart {
   max-height: 400px !important;

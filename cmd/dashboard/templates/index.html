@@ -76,7 +76,32 @@
 @include 'partials/header'
 
 <div class="wrapper">
-    @{content}
+    <div class="general-statistic">
+        <div class="block">
+            <div class="title">All visitors</div>
+            <div class="value">@{all_views}</div>
+        </div>
+        <div class="block">
+            <div class="title">Countries</div>
+            <div class="value">@{countries_count}</div>
+        </div>
+    </div>
+
+    <h2>Per sites statistic</h2>
+
+    <div>
+        <canvas class="chart" id="per-site-stats"></canvas>
+    </div>
+
+    <h2>Per country statistic</h2>
+
+    <div>
+        <canvas class="chart" id="per-country-stats"></canvas>
+    </div>
+
+    <p class="updated-label">
+        Updated at ${updated_at}
+    </p>
 </div>
 
 @include 'partials/footer'

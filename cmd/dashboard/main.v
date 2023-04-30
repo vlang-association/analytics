@@ -6,6 +6,7 @@ import cmd.models
 import os
 import flag
 import time
+import arrays
 
 const (
 	template_path = './templates/index.html'
@@ -103,50 +104,23 @@ fn (mut s Server) update_analytics_data() {
 
 ['/']
 fn (mut s Server) index() vweb.Result {
-	// data := sql s.db {
-	// 	select from models.AnalyticsEvent
-	// } or {
-	// 	eprintln('Database Error: ${err}')
-	// 	s.set_status(500, 'Internal Server Error')
-	// 	return s.text('Database Error')
-	// }
-	//
-	// html := data.map(fn (it models.AnalyticsEvent) string {
-	// 	created_at := time.unix(it.created_at)
-	// 	return '<tr><td>' + it.url + '</td><td>' + created_at.format_ss() + '</td></tr>'
-	// }).join('\n')
-
-	content := '
-<h2>Per sites statistic</h2>
-
-<div>
-  <canvas class="chart" id="per-site-stats"></canvas>
-</div>
-
-<h2>Per country statistic</h2>
-
-<div>
-  <canvas class="chart" id="per-country-stats"></canvas>
-</div>
-
-<p class="updated-label">
-Updated at ${s.data.updated_at.format_ss()}
-</p>
-'
-
-	per_sites_data := [
+	per_site_views := [
 		s.data.main_page_views,
 		s.data.docs_views,
 		s.data.playground_views,
 		s.data.blog_views,
 		s.data.modules_views,
 		s.data.intellij_v_views,
-	].map(it.str()).join(', ')
+	]
+	all_views := arrays.sum(per_site_views) or { 0 }
+	per_sites_data := per_site_views.map(it.str()).join(', ')
 
 	per_countries_labels := s.data.country_map.keys().map('"${it}"').join(', ')
 	per_countries_data := s.data.country_map.values().map(it.str()).join(', ')
+	countries_count := s.data.country_map.len
 
 	title := 'Dashboard'
+	updated_at := s.data.updated_at.format_ss()
 	now := time.now().custom_format('YYYY')
 
 	return s.html($tmpl(template_path))
