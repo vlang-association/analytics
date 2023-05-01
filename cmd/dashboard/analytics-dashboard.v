@@ -97,7 +97,7 @@ fn (mut s Server) update_analytics_data() {
 		uniques_rows, _ := s.db.exec('
 			SELECT SUM(1)
 			FROM analytics
-			GROUP BY country_name, user_agent, accept_language
+			GROUP BY country_name, city_name, user_agent, accept_language
 			ORDER BY count(*) DESC
 '.trim_indent())
 
