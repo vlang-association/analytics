@@ -21,8 +21,6 @@ fn (mut s Server) index() vweb.Result {
 
 ['/a'; post]
 fn (mut s Server) analytics() vweb.Result {
-	println('Got analytics event from ${s.ip()}')
-
 	mut data := json.decode(models.AnalyticsEvent, s.req.data) or {
 		eprintln('Invalid JSON: ' + s.req.data)
 		s.set_status(400, 'Bad Request')
