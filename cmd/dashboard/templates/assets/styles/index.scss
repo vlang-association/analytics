@@ -122,11 +122,43 @@ a.external-link {
 
   .chart {
     max-height: 400px !important;
-    max-width: 800px;
+    max-width: 1000px;
+
+    &.wide {
+      max-width: 1200px;
+    }
   }
 
   .big-height-chart {
     max-height: 600px !important;
+  }
+
+  a {
+    color: var(--blue);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 20px 0;
+    overflow: auto;
+
+    th {
+      font-weight: 500;
+      text-align: left;
+      padding: 10px 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+      padding: 5px 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
   }
 
   .updated-label {

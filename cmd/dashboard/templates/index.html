@@ -102,11 +102,57 @@
     <h2>Per country statistic</h2>
 
     <div>
-        <canvas class="chart" id="per-country-stats"></canvas>
+        <canvas class="chart wide big-height-chart" id="per-country-stats"></canvas>
     </div>
+
+    <h2>
+        Top 10 most visited pages in documentation
+    </h2>
+
+    <div>
+        <table>
+            <tr>
+                <th>Page</th>
+                <th>Views</th>
+            </tr>
+            @{top_10_documentation_pages_rows}
+        </table>
+    </div>
+
+    <h2>
+        Top 10 most visited pages in modules
+    </h2>
+
+    <div>
+        <table>
+            <tr>
+                <th>Page</th>
+                <th>Views</th>
+            </tr>
+            @{top_10_modules_pages_rows}
+        </table>
+    </div>
+
+    <h2>
+        Top 10 most visited pages in blog
+    </h2>
+
+    <div>
+        <table>
+            <tr>
+                <th>Page</th>
+                <th>Views</th>
+            </tr>
+            @{top_10_blog_pages_rows}
+        </table>
+    </div>
+
 
     <p class="updated-label">
         Updated at ${updated_at}
+        <br>
+        <br>
+        Statistics are collected since ${start_date}
     </p>
 </div>
 

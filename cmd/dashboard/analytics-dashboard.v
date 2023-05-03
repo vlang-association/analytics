@@ -26,6 +26,10 @@ mut:
 	uniques_count int
 
 	country_map map[string]int
+
+	top_10_documentation_pages map[string]int
+	top_10_modules_pages       map[string]int
+	top_10_blog_pages          map[string]int
 }
 
 struct Server {
@@ -33,6 +37,25 @@ struct Server {
 mut:
 	db   sqlite.DB
 	data FetchedData [vweb_global]
+}
+
+fn (mut s Server) get_top_10_pages(site_id int) map[string]int {
+	top_10_documentation_pages, _ := s.db.exec('
+		SELECT url, count(1)
+		FROM analytics
+		WHERE site_id == ${site_id}
+		GROUP BY url
+		ORDER BY count(*) DESC
+		LIMIT 10
+	'.trim_indent())
+
+	mut top_10_documentation_pages_map := map[string]int{}
+	for row in top_10_documentation_pages {
+		url, count := row.vals[0], row.vals[1]
+		top_10_documentation_pages_map[url] = count.int()
+	}
+
+	return top_10_documentation_pages_map
 }
 
 fn (mut s Server) update_analytics_data() {
@@ -103,8 +126,25 @@ fn (mut s Server) update_analytics_data() {
 
 		s.data.uniques_count = uniques_rows.len
 
+		s.data.top_10_documentation_pages = s.get_top_10_pages(1)
+		s.data.top_10_blog_pages = s.get_top_10_pages(2)
+		s.data.top_10_modules_pages = s.get_top_10_pages(3)
+
 		time.sleep(5 * time.minute)
 	}
+}
+
+fn (mut _ Server) top_10_to_table(data map[string]int) string {
+	mut top_10_rows := ''
+	for url, count in data {
+		top_10_rows += '
+		<tr>
+			<td><a href="${url}">${url}</td>
+			<td>${count}</td>
+		</tr>
+'.trim_indent()
+	}
+	return top_10_rows
 }
 
 ['/']
@@ -126,9 +166,15 @@ fn (mut s Server) index() vweb.Result {
 
 	uniques_count := s.data.uniques_count
 
+	top_10_documentation_pages_rows := s.top_10_to_table(s.data.top_10_documentation_pages)
+	top_10_modules_pages_rows := s.top_10_to_table(s.data.top_10_modules_pages)
+	top_10_blog_pages_rows := s.top_10_to_table(s.data.top_10_blog_pages)
+
 	title := 'Dashboard'
 	updated_at := s.data.updated_at.format_ss()
 	now := time.now().custom_format('YYYY')
+
+	start_date := time.unix(1682781259).format_ss()
 
 	return s.html($tmpl(template_path))
 }
