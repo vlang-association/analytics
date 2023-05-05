@@ -153,6 +153,41 @@ fn (mut s Server) update_analytics_data() {
 		s.data.top_10_blog_pages = s.get_top_10_pages(2)
 		s.data.top_10_modules_pages = s.get_top_10_pages(3)
 
+		// Visits by days for the last 7 days.
+		// SELECT
+		//	COUNT(*) AS visits,
+		//	DATE(created_at, 'unixepoch') AS date
+		// FROM
+		//	analytics
+		// WHERE
+		//	date > DATETIME ('now', '-7 days')
+		// GROUP BY
+		//	date
+		// ORDER BY
+		//	date DESC;
+
+		// Visitors by days for the last 7 days.
+		// SELECT
+		//	COUNT(*) AS visitors,
+		//	date
+		// FROM (
+		//	SELECT
+		//		SUM(1),
+		//		DATE(created_at, 'unixepoch') AS date
+		//	FROM
+		//		analytics
+		//	WHERE
+		//		date > DATETIME ('now', '-7 days')
+		//	GROUP BY
+		//		country_name,
+		//		city_name,
+		//		user_agent,
+		//		accept_language)
+		// GROUP BY
+		//	date
+		// ORDER BY
+		//	date DESC;
+
 		time.sleep(5 * time.minute)
 	}
 }
