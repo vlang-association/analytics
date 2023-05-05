@@ -1124,28 +1124,36 @@ a.external-link:after {
 }
 .wrapper .general-statistic .block {
   min-width: 300px;
-  padding: 10px 20px;
+  padding: 15px 20px 13px;
   border: 1px solid var(--divider-color);
   border-radius: 10px;
 }
 .wrapper .general-statistic .block .title {
   font-size: 16px;
   font-weight: 700;
-  line-height: 1.5;
+  line-height: 1;
+  margin-bottom: 10px;
   color: var(--secondary-color);
 }
 .wrapper .general-statistic .block .value {
   font-size: 30px;
   font-weight: 700;
-  line-height: 1.5;
+  line-height: 1;
   color: var(--text-color);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 10px;
+}
+.wrapper .general-statistic .block .value .change {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--light-green);
 }
 .wrapper .chart {
   max-height: 400px !important;
   max-width: 1000px;
-}
-.wrapper .chart.wide {
-  max-width: 1200px;
 }
 .wrapper .big-height-chart {
   max-height: 600px !important;
@@ -1156,6 +1164,10 @@ a.external-link:after {
 }
 .wrapper a:hover {
   text-decoration: underline;
+}
+.wrapper .table-wrapper {
+  max-width: 100%;
+  overflow-x: scroll;
 }
 .wrapper table {
   border-collapse: collapse;

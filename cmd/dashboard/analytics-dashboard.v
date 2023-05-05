@@ -23,9 +23,12 @@ mut:
 	main_page_views  int
 	intellij_v_views int
 
+	today_views_increase int
+
 	uniques_count int
 
-	country_map map[string]int
+	countries_count int
+	country_map     map[string]int
 
 	top_10_documentation_pages map[string]int
 	top_10_modules_pages       map[string]int
@@ -104,17 +107,37 @@ fn (mut s Server) update_analytics_data() {
 			return
 		}
 
-		s.data.updated_at = time.now()
+		now := time.now()
+		today_start := time.new_time(year: now.year, month: now.month, day: now.day).unix_time()
 
-		res, _ := s.db.exec('SELECT country_name, SUM(1) FROM analytics GROUP BY country_name')
+		s.data.today_views_increase = sql s.db {
+			select count from models.AnalyticsEvent where created_at > today_start
+		} or {
+			eprintln('Database Error: ${err}')
+			return
+		}
 
+		s.data.updated_at = now
+
+		country_res_rows, _ := s.db.exec('
+			SELECT country_name, SUM(1)
+			FROM analytics
+			GROUP BY country_name
+			ORDER BY count(*) DESC
+		'.trim_indent())
+
+		s.data.countries_count = country_res_rows.len
 		s.data.country_map = map[string]int{}
-		for row in res {
+		for index, row in country_res_rows {
 			country, country_count := row.vals[0], row.vals[1]
 			if country.trim(' ').len == 0 {
 				continue
 			}
 			s.data.country_map[country] = country_count.int()
+
+			if index >= 30 {
+				break
+			}
 		}
 
 		uniques_rows, _ := s.db.exec('
@@ -158,11 +181,12 @@ fn (mut s Server) index() vweb.Result {
 		s.data.intellij_v_views,
 	]
 	all_views := arrays.sum(per_site_views) or { 0 }
+	all_views_today_increase := s.data.today_views_increase
 	per_sites_data := per_site_views.map(it.str()).join(', ')
 
 	per_countries_labels := s.data.country_map.keys().map('"${it}"').join(', ')
 	per_countries_data := s.data.country_map.values().map(it.str()).join(', ')
-	countries_count := s.data.country_map.len
+	countries_count := s.data.countries_count
 
 	uniques_count := s.data.uniques_count
 

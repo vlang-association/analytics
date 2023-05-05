@@ -79,7 +79,10 @@
     <div class="general-statistic">
         <div class="block">
             <div class="title">All visits</div>
-            <div class="value">@{all_views}</div>
+            <div class="value">
+                <span>@{all_views}</span>
+                <div class="change">+@{all_views_today_increase} today</div>
+            </div>
         </div>
         <div class="block">
             <div class="title">Countries</div>
@@ -99,7 +102,7 @@
         <canvas class="chart" id="per-site-stats"></canvas>
     </div>
 
-    <h2>Per country statistic</h2>
+    <h2>Per country statistic (top 30)</h2>
 
     <div>
         <canvas class="chart wide big-height-chart" id="per-country-stats"></canvas>
@@ -109,7 +112,7 @@
         Top 10 most visited pages in documentation
     </h2>
 
-    <div>
+    <div class="table-wrapper">
         <table>
             <tr>
                 <th>Page</th>
@@ -123,7 +126,7 @@
         Top 10 most visited pages in modules
     </h2>
 
-    <div>
+    <div class="table-wrapper">
         <table>
             <tr>
                 <th>Page</th>
@@ -137,7 +140,7 @@
         Top 10 most visited pages in blog
     </h2>
 
-    <div>
+    <div class="table-wrapper">
         <table>
             <tr>
                 <th>Page</th>
