@@ -96,6 +96,12 @@
         </div>
     </div>
 
+    <h2>Last 7 day</h2>
+
+    <div>
+        <canvas class="chart" id="per-day-views"></canvas>
+    </div>
+
     <h2>Per site statistic</h2>
 
     <div>
@@ -169,6 +175,35 @@
 
 <script>
     const charts = []
+
+    charts.push(new Chart(document.getElementById('per-day-views'), {
+        type: 'line',
+        data: {
+            labels: [
+                @{last_7_day_labels}
+            ],
+            datasets: [{
+                label: 'Number of Views',
+                data: [
+                    @{last_7_day_data}
+                ],
+                borderColor: [
+                    'rgb(75, 192, 192)',
+                ],
+                pointBackgroundColor: 'rgb(75, 192, 192)',
+                pointBorderWidth: 2,
+                fill: false,
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    }));
+
     charts.push(new Chart(document.getElementById('per-site-stats'), {
         type: 'bar',
         data: {

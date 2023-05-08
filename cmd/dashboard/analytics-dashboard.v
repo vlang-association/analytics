@@ -27,6 +27,8 @@ mut:
 
 	uniques_count int
 
+	visits_by_day map[int]int
+
 	countries_count int
 	country_map     map[string]int
 
@@ -145,7 +147,7 @@ fn (mut s Server) update_analytics_data() {
 			FROM analytics
 			GROUP BY country_name, city_name, user_agent, accept_language
 			ORDER BY count(*) DESC
-'.trim_indent())
+		'.trim_indent())
 
 		s.data.uniques_count = uniques_rows.len
 
@@ -153,18 +155,20 @@ fn (mut s Server) update_analytics_data() {
 		s.data.top_10_blog_pages = s.get_top_10_pages(2)
 		s.data.top_10_modules_pages = s.get_top_10_pages(3)
 
-		// Visits by days for the last 7 days.
-		// SELECT
-		//	COUNT(*) AS visits,
-		//	DATE(created_at, 'unixepoch') AS date
-		// FROM
-		//	analytics
-		// WHERE
-		//	date > DATETIME ('now', '-7 days')
-		// GROUP BY
-		//	date
-		// ORDER BY
-		//	date DESC;
+		visits_by_day, _ := s.db.exec("
+			SELECT COUNT(*)               		 AS visits,
+       			   DATE(created_at, 'unixepoch') AS date,
+       			   created_at
+			FROM analytics
+			WHERE date > DATETIME('now', '-7 days')
+			GROUP BY date
+			ORDER BY date;
+		".trim_indent())
+
+		for row in visits_by_day {
+			visits, created_at := row.vals[0], row.vals[2]
+			s.data.visits_by_day[created_at.int()] = visits.int()
+		}
 
 		// Visitors by days for the last 7 days.
 		// SELECT
@@ -218,6 +222,12 @@ fn (mut s Server) index() vweb.Result {
 	all_views := arrays.sum(per_site_views) or { 0 }
 	all_views_today_increase := s.data.today_views_increase
 	per_sites_data := per_site_views.map(it.str()).join(', ')
+
+	last_7_day_labels := s.data.visits_by_day.keys()
+		.map(time.unix(it).custom_format('DD.MM'))
+		.map('"${it}"')
+		.join(', ')
+	last_7_day_data := s.data.visits_by_day.values().map(it.str()).join(', ')
 
 	per_countries_labels := s.data.country_map.keys().map('"${it}"').join(', ')
 	per_countries_data := s.data.country_map.values().map(it.str()).join(', ')
