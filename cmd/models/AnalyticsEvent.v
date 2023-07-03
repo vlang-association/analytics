@@ -13,6 +13,7 @@ pub enum SiteId {
 	modules
 	main_page
 	intellij_plugin
+	v_analyzer
 	unknown = -1
 }
 
@@ -26,6 +27,7 @@ pub fn site_id_from_url(path string) SiteId {
 		'modules.vosca.dev' { .modules }
 		'vosca.dev' { .main_page }
 		'intellij-v.github.io' { .intellij_plugin }
+		'v-analyzer.github.io' { .v_analyzer }
 		else { .unknown }
 	}
 }
